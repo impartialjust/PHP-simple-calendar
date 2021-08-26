@@ -57,9 +57,6 @@ echo "Your password :";
 $accountpwd1 = trim(fgets(STDIN));
 echo "Confirm password :";
 $accountpwd2 = trim(fgets(STDIN));
-echo $accountpwd1 . "\n";
-echo $accountpwd2 . "\n";
-//password confirm error always see the same password not debugged yet
 
 while (true) {
     if ($accountpwd1 == $accountpwd2) {
