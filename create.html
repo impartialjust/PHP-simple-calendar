@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
+        integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="
+        crossorigin="anonymous"></script>
+    <script>
+
+        var inputText = document.getElementById("account");
+        inputText.addEventListener("keyup", function (event) {
+            if (event.keyCode === 13) {
+                event.preventDefault();
+                document.getElementById("sumbit").click();
+            }
+        });
+        var inputText = document.getElementById("email");
+        inputText.addEventListener("keyup", function (event) {
+            if (event.keyCode === 13) {
+                event.preventDefault();
+                document.getElementById("sumbit").click();
+            }
+        });
+        var inputText = document.getElementById("2pwd");
+        inputText.addEventListener("keyup", function (event) {
+            if (event.keyCode === 13) {
+                event.preventDefault();
+                document.getElementById("sumbit").click();
+            }
+        });
+        function go() {
+            // Stop the browser from doing anything else
+            //preventDefault();
+            // Do an AJAX post
+            //detect auto password or not
+            if (document.getElementById('autopwd').checked) {
+                $.ajax({
+                    type: "POST",
+                    url: "createemail.php",
+                    data: {
+                        account: document.getElementById("account").value,
+                        email: document.getElementById("remail").value, // various ways to store the ID, you can choose
+                    },
+                    success: function (data) {
+                        // POST was successful - do something with the response
+                        alert(data);
+                    },
+                    error: function (data) {
+                        // return http status code
+                        alert(data.responseText);
+                    }
+                });
+            } else {
+                if (document.getElementById("pwd").value == document.getElementById("2pwd").value) {
+                    $.ajax({
+                        type: "POST",
+                        url: "create.php",
+                        data: {
+                            account: document.getElementById("account").value,
+                            password: document.getElementById("2pwd").value, // various ways to store the ID, you can choose
+                        },
+                        success: function (data) {
+                            // POST was successful - do something with the response
+                            alert(data);
+                        },
+                        error: function (data) {
+                            // return http status code
+                            alert(data.responseText);
+                        }
+                    })
+                } else {
+                    document.getElementById("result").innerHTML = "Password do not match!";
+                }
+            }
+        }
+    </script>
+    <script>
+        setInterval(() => {
+            if (document.getElementById('autopwd').checked) {
+
+                var x = document.getElementById("email");
+                x.style.display = "block";
+                var x = document.getElementById("password");
+                x.style.display = "none";
+
+
+
+            } else {
+                var x = document.getElementById("email");
+                x.style.display = "none";
+                var x = document.getElementById("password");
+                x.style.display = "block";
+
+            }
+        }, 1000);
+
+    </script>
+
+</head>
+
+<body>
+    User account: <input type="text" autocomplete="off" id="account" required>
+    Auto asign password via email:<input type="checkbox" id="autopwd" required>
+    <div id="password">
+        Password: <input type="password" autocomplete="new-password" id="pwd">
+        Confirm password: <input type="password" autocomplete="new-password" id="2pwd"></div>
+    <div id="email">
+        Email: <input type="email" autocomplete="off" id="remail"></div>
+    <button id="sumbit" onclick="go();">Create account</button>
+    <h2>Result</h2>
+    <div id="result"></div>
+</body>
