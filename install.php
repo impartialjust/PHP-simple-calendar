@@ -1,6 +1,6 @@
 <?PHP
 
-require_once 'demoset.php';
+require_once 'setting.php';
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
